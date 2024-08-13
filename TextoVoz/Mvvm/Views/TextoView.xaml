@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TextoVoz.Mvvm.Views.TextoView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+
+
+
+    <Grid
+        Margin="10"
+        ColumnDefinitions="*"
+        HorizontalOptions="Fill"
+        RowDefinitions="1*,9*"
+        VerticalOptions="Center">
+
+
+        <Grid Grid.Row="1">
+
+            <CollectionView
+                x:Name="collectionView"
+                Margin="5"
+                ItemsSource="{Binding LinhasTexto.Linhas}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label Text="{Binding .}" />
+                        </Grid>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="*,*,*,*"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <Button
+                x:Name="previous"
+                Grid.Column="0"
+                Margin="5"
+                Command="{Binding ButtonClickPreviousCommand}"
+                CornerRadius="50"
+                HeightRequest="65"
+                ImageSource="musicplayerprevious.png"
+                WidthRequest="65" />
+
+            <Button
+                x:Name="StartStop"
+                Grid.Column="2"
+                Margin="5"
+                Command="{Binding ButtonClickStartStopCommand}"
+                CommandParameter="{Binding Source={x:Reference StartStop}, Path=ImageSource}"
+                CornerRadius="50"
+                HeightRequest="65"
+                ImageSource="{Binding MyImageSource}"
+                WidthRequest="65" />
+
+            <Button
+                x:Name="next"
+                Grid.Column="3"
+                Margin="5"
+                Command="{Binding ButtonClickNextCommand}"
+                CornerRadius="50"
+                HeightRequest="65"
+                ImageSource="musicplayernext.png"
+                WidthRequest="65" />
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

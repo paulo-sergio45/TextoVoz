@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TextoVoz.Mvvm.Views.HomeView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid
+        Margin="10"
+        ColumnDefinitions="2*,6*,2*"
+        RowDefinitions="1*,1*,8*">
+
+        <Button
+            x:Name="selecioneArquivo"
+            Grid.Row="0"
+            Grid.Column="1"
+            Clicked="selecioneArquivo_Clicked"
+            Text="Selecione o arquivo" />
+        <Label
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="10"
+            HorizontalOptions="Center"
+            Text="Esse aplicativo tem como proposito estudar e praticar programação." />
+        <Image
+            Grid.Row="2"
+            Grid.ColumnSpan="3"
+            IsAnimationPlaying="True"
+            Source="gifandroid.gif" />
+
+
+
+
+    </Grid>
+
+</ContentPage>
