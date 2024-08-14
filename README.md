@@ -1,7 +1,7 @@
 
 # Aplicativo Texto Voz
 
-O aplicativo foi criado para ler um arquivo de texto usando a interface text-to-speech do .NET MAUI.
+O aplicativo foi desenvolvido para ler um arquivo de texto através da interface text-to-speech do .NET MAUI e reproduzir o áudio.
 
 
 ## Features
@@ -10,7 +10,7 @@ O aplicativo foi criado para ler um arquivo de texto usando a interface text-to-
 - Ajustes de voz, volume e idioma.
 - O reprodutor de áudio possui funções para iniciar, avançar e voltar.
 
-##Teste
+## Teste
 
 - Windows
 - Android
