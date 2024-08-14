@@ -6,6 +6,7 @@ namespace TextoVoz.Mvvm.Views;
 public partial class HomeView : ContentPage
 {
     private readonly ICustomFileTypeService _customFileTypeText;
+
     private readonly ITextoRepository _textoRepository;
 
     public HomeView(ICustomFileTypeService customFileType, ITextoRepository textoRepository)
@@ -13,21 +14,20 @@ public partial class HomeView : ContentPage
         InitializeComponent();
         _customFileTypeText = customFileType;
         _textoRepository = textoRepository;
-
     }
 
-    public async void selecioneArquivo_Clicked(object sender, EventArgs e)
+    public async void SelecioneArquivo_Clicked(object sender, EventArgs e)
     {
         var result = await FilePicker.Default.PickAsync(_customFileTypeText.GetCustomFileTypeText("selecione um arquivo .txt"));
 
         if (result != null)
         {
-            _textoRepository.UpdateTexto(new Texto { Linhas = readFile(result) });
+            _textoRepository.UpdateTexto(new Texto { Linhas = HomeView.ReadFile(result) });
             await Shell.Current.GoToAsync($"//{nameof(TextoView)}?Reload=true");
         }
     }
 
-    private List<string> readFile(FileResult fileResult)
+    private static List<string> ReadFile(FileResult fileResult)
     {
         try
         {

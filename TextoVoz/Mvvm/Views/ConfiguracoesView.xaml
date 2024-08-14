@@ -10,99 +10,75 @@
         HorizontalOptions="Fill"
         RowDefinitions="1*,1*,1*,1*,1*,1*,1*"
         VerticalOptions="StartAndExpand">
-
-
         <Label
             Grid.Row="0"
             Margin="10"
             HorizontalOptions="Fill"
             Text="Tom da Voz"
             VerticalOptions="StartAndExpand" />
-
         <Grid
             Grid.Row="1"
             ColumnDefinitions="9*,1*"
             HorizontalOptions="Fill"
             VerticalOptions="Center">
-
-
             <Slider
                 Grid.Column="0"
                 Maximum="100"
                 Minimum="0"
                 Value="{Binding TomVM}" />
-
             <Label
                 Grid.Column="1"
                 HorizontalOptions="Center"
                 Text="{Binding TomVM, StringFormat='{0:F2}'}"
                 VerticalOptions="Center" />
-
-
         </Grid>
-
         <Label
             Grid.Row="2"
             Margin="10"
             HorizontalOptions="Fill"
             Text="Volume da Voz"
             VerticalOptions="StartAndExpand" />
-
         <Grid
             Grid.Row="3"
             ColumnDefinitions="9*,1*"
             HorizontalOptions="Fill"
             VerticalOptions="Center">
-
-
-
             <Slider
                 Grid.Column="0"
                 Maximum="100"
                 Minimum="0"
                 Value="{Binding VolumeVM}" />
-
-
             <Label
                 Grid.Column="1"
                 HorizontalOptions="Center"
                 Text="{Binding VolumeVM, StringFormat='{0:F0}%'}"
                 VerticalOptions="Center" />
         </Grid>
-
         <Label
             Grid.Row="4"
             Margin="10"
             HorizontalOptions="Fill"
             Text="Selecione a voz"
             VerticalOptions="StartAndExpand" />
-
         <Grid
             Grid.Row="5"
             HorizontalOptions="Fill"
             VerticalOptions="Center">
-
-
             <Picker
                 ItemDisplayBinding="{Binding Name}"
                 ItemsSource="{Binding LocaisVM}"
                 SelectedItem="{Binding LocalVM}" />
-
         </Grid>
-
         <Grid
             Grid.Row="6"
             Margin="10"
             ColumnDefinitions="2*,6*,2*"
             HorizontalOptions="Fill"
             VerticalOptions="Center">
-
             <Button
                 Grid.Column="1"
                 Command="{Binding SaveConfiguracoesCommand}"
                 Text="Salvar as configurações" />
-
         </Grid>
-
     </Grid>
 </ContentPage>

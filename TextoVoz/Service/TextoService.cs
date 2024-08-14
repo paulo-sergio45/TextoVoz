@@ -3,14 +3,10 @@ using TextoVoz.Mvvm.Models;
 
 namespace TextoVoz.Service
 {
-    public class TextoService : ITextoService
+    public class TextoService(ITextoRepository textoRepository) : ITextoService
     {
-        private readonly ITextoRepository _textoRepository;
+        private readonly ITextoRepository _textoRepository = textoRepository;
 
-        public TextoService(ITextoRepository textoRepository)
-        {
-            _textoRepository = textoRepository;
-        }
         public void AtualizaTexto(Texto texto)
         {
             _textoRepository.UpdateTexto(texto);

@@ -9,6 +9,4 @@ public partial class ConfiguracoesView : ContentPage
         InitializeComponent();
         BindingContext = configuracoesViewModel;
     }
-
-
 }

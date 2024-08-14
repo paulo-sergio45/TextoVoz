@@ -5,7 +5,6 @@ namespace TextoVoz.Repository
 {
     public class ConfiguracoesRepository : IConfiguracoesRepository
     {
-
         public async Task<Configuracoes> GetConfiguracoesAsync()
         {
             double volume = Preferences.Default.Get("ConfigVolume", 0.0);
@@ -18,7 +17,6 @@ namespace TextoVoz.Repository
             Configuracoes config = new() { Tom = tom, Volume = volume, Local = local };
 
             return config;
-
         }
         public void UpdateConfiguracoes(Configuracoes config)
         {
@@ -32,11 +30,8 @@ namespace TextoVoz.Repository
 
         public async Task<List<Locale>> GetVozlocaisAsync()
         {
-
             IEnumerable<Locale> locales = await TextToSpeech.Default.GetLocalesAsync();
             return locales.ToList();
-
         }
-
     }
 }

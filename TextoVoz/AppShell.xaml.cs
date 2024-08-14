@@ -7,7 +7,6 @@ namespace TextoVoz
         public AppShell()
         {
             InitializeComponent();
-
             Routing.RegisterRoute(nameof(HomeView), typeof(HomeView));
             Routing.RegisterRoute(nameof(TextoView), typeof(TextoView));
             Routing.RegisterRoute(nameof(ConfiguracoesView), typeof(ConfiguracoesView));

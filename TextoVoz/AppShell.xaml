@@ -11,7 +11,6 @@
     Shell.TabBarBackgroundColor="#512BD4"
     Shell.TabBarForegroundColor="White"
     Shell.TabBarTitleColor="White">
-
     <TabBar>
         <Tab Title="Página Inicial" Icon="home.png">
             <ShellContent ContentTemplate="{DataTemplate views:HomeView}" Route="HomeView" />
@@ -23,7 +22,4 @@
             <ShellContent ContentTemplate="{DataTemplate views:ConfiguracoesView}" Route="ConfiguracoesView" />
         </Tab>
     </TabBar>
-
-
-
 </Shell>

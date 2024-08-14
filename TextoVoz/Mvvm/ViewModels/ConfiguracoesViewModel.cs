@@ -11,25 +11,27 @@ namespace TextoVoz.Mvvm.ViewModels
 
         [ObservableProperty]
         private double _tomVM;
+
         [ObservableProperty]
         private double _volumeVM;
+
         [ObservableProperty]
         private Locale _localVM;
+
         [ObservableProperty]
         private List<Locale> _locaisVM;
-
-
         public ConfiguracoesViewModel(IConfiguracoesService configuracoesService)
         {
             _configuracoesService = configuracoesService;
             _ = ConfiguracoesLoadAsync();
         }
 
-
         [RelayCommand]
         private async Task SaveConfiguracoesAsync()
         {
-            _configuracoesService.AtualizaConfiguracoes(new Configuracoes { Volume = VolumeVM, Tom = TomVM, Local = LocalVM });
+            if (LocalVM != null)
+                _configuracoesService.AtualizaConfiguracoes(new Configuracoes { Volume = VolumeVM, Tom = TomVM, Local = LocalVM });
+
             await ConfiguracoesLoadAsync();
         }
 

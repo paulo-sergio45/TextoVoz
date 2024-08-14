@@ -5,21 +5,18 @@ using TextoVoz.Mvvm.Models;
 namespace TextoVoz.Repository
 {
 
-
     class TextoRepository : ITextoRepository
     {
         public string FileName { get; } = "/TextoStore.txt";
+
         public string Path { get; } = FileSystem.AppDataDirectory;
 
         public Texto GetTexto()
         {
             try
             {
-
                 if (!File.Exists(Path + FileName))
-                {
                     File.Create(Path + FileName).Close();
-                }
 
                 var rawData = File.ReadAllText(Path + FileName);
 
@@ -36,7 +33,6 @@ namespace TextoVoz.Repository
                 throw;
             }
             return new Texto();
-
         }
 
         public void UpdateTexto(Texto texto)
