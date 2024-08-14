@@ -4,7 +4,6 @@ namespace TextoVoz.Interfaces
 {
     public interface IConfiguracoesRepository
     {
-
         public Task<Configuracoes> GetConfiguracoesAsync();
 
         public void UpdateConfiguracoes(Configuracoes config);

@@ -20,6 +20,7 @@ namespace TextoVoz.Mvvm.ViewModels
 
         [ObservableProperty]
         private List<Locale> _locaisVM;
+
         public ConfiguracoesViewModel(IConfiguracoesService configuracoesService)
         {
             _configuracoesService = configuracoesService;

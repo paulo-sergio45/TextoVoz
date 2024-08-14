@@ -1,5 +1,4 @@
-﻿
-namespace TextoVoz.Mvvm.Models
+﻿namespace TextoVoz.Mvvm.Models
 {
     public class Configuracoes
     {
