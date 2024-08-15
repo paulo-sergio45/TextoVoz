@@ -51,8 +51,8 @@ namespace TextoVoz
 
         public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddTransient<ConfiguracoesViewModel>();
-            mauiAppBuilder.Services.AddTransient<TextoViewModel>();
+            mauiAppBuilder.Services.AddSingleton<ConfiguracoesViewModel>();
+            mauiAppBuilder.Services.AddSingleton<TextoViewModel>();
             // More view-models registered here.
 
             return mauiAppBuilder;
@@ -60,9 +60,9 @@ namespace TextoVoz
 
         public static MauiAppBuilder RegisterViews(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddTransient<ConfiguracoesView>();
-            mauiAppBuilder.Services.AddTransient<HomeView>();
-            mauiAppBuilder.Services.AddTransient<TextoView>();
+            mauiAppBuilder.Services.AddSingleton<ConfiguracoesView>();
+            mauiAppBuilder.Services.AddSingleton<HomeView>();
+            mauiAppBuilder.Services.AddSingleton<TextoView>();
             // More views registered here.
 
             return mauiAppBuilder;

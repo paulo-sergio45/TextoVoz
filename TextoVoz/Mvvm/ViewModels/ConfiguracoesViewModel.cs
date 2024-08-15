@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using TextoVoz.Interfaces;
 using TextoVoz.Mvvm.Models;
+using TextoVoz.Mvvm.Views;
 
 namespace TextoVoz.Mvvm.ViewModels
 {
@@ -34,6 +35,8 @@ namespace TextoVoz.Mvvm.ViewModels
                 _configuracoesService.AtualizaConfiguracoes(new Configuracoes { Volume = VolumeVM, Tom = TomVM, Local = LocalVM });
 
             await ConfiguracoesLoadAsync();
+
+            await Shell.Current.GoToAsync($"//{nameof(TextoView)}?Reload=true");
         }
 
         private async Task ConfiguracoesLoadAsync()

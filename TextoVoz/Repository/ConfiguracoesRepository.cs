@@ -14,6 +14,11 @@ namespace TextoVoz.Repository
             List<Locale> locales = await GetVozlocaisAsync();
             var local = locales.FirstOrDefault(e => e.Name == localName) ?? locales.First();
 
+            if (string.IsNullOrEmpty(localName))
+            {
+                return new Configuracoes() { Tom = 50.0, Volume = 100.0, Local = local };
+            }
+
             Configuracoes config = new() { Tom = tom, Volume = volume, Local = local };
 
             return config;
