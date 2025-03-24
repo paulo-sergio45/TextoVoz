@@ -12,9 +12,19 @@ namespace TextoVoz.Service
             _textoRepository.UpdateTexto(texto);
         }
 
-        public Texto GetTexto()
+        public int GetIndex()
         {
-            return _textoRepository.GetTexto();
+            return _textoRepository.GetIndex();
+        }
+
+        public async Task<Texto> GetTexto()
+        {
+            return await _textoRepository.GetTexto();
+        }
+
+        public void UpdateIndex(int index)
+        {
+            _textoRepository.UpdateIndex(index);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace TextoVoz.Mvvm.ViewModels
     {
         private readonly IConfiguracoesService _configuracoesService;
 
+        public Task _configuracoesLoadAsync { get; private set; }
+
         [ObservableProperty]
         private double _tomVM;
 
@@ -25,7 +27,8 @@ namespace TextoVoz.Mvvm.ViewModels
         public ConfiguracoesViewModel(IConfiguracoesService configuracoesService)
         {
             _configuracoesService = configuracoesService;
-            _ = ConfiguracoesLoadAsync();
+
+            _configuracoesLoadAsync = ConfiguracoesLoadAsync();
         }
 
         [RelayCommand]
@@ -49,3 +52,4 @@ namespace TextoVoz.Mvvm.ViewModels
         }
     }
 }
+

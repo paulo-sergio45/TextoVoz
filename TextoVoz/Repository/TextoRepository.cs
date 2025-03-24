@@ -9,16 +9,18 @@ namespace TextoVoz.Repository
     {
         public string FileName { get; } = "/TextoStore.txt";
 
+        public int Index { get; }
+
         public string Path { get; } = FileSystem.AppDataDirectory;
 
-        public Texto GetTexto()
+        public async Task<Texto> GetTexto()
         {
             try
             {
                 if (!File.Exists(Path + FileName))
                     File.Create(Path + FileName).Close();
 
-                var rawData = File.ReadAllText(Path + FileName);
+                var rawData = await File.ReadAllTextAsync(Path + FileName);
 
                 if (string.IsNullOrEmpty(rawData))
                     return new Texto();
@@ -34,13 +36,36 @@ namespace TextoVoz.Repository
             }
             return new Texto();
         }
-
-        public void UpdateTexto(Texto texto)
+        public int GetIndex()
+        {
+            try
+            {
+                int index = Preferences.Default.Get("Index", 0);
+                return index;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public async void UpdateTexto(Texto texto)
         {
             try
             {
                 var serializedData = JsonSerializer.Serialize(texto);
-                File.WriteAllText(Path + FileName, serializedData);
+                await File.WriteAllTextAsync(Path + FileName, serializedData);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void UpdateIndex(int index)
+        {
+            try
+            {
+                Preferences.Default.Set("Index", index);
             }
             catch (Exception)
             {

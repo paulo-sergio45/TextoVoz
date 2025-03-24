@@ -10,19 +10,18 @@ public partial class TextoViewModel : ObservableObject
 {
     public string TextoReload
     {
-        set
-        {
-            LinhasTexto = LoadTexto();
-        }
+        set => _textoLoadAsync = TextoReloadAsync();
     }
 
     public Action<int>? IndexViewModel;
 
-    private readonly ITextoRepository _textoRepository;
+    private readonly ITextoService _textoService;
 
-    private readonly IConfiguracoesRepository _configuracoesRepository;
+    private readonly IConfiguracoesService _configuracoesService;
 
     private CancellationTokenSource cts;
+
+    public Task _textoLoadAsync { get; private set; }
 
     private int _index;
 
@@ -32,13 +31,12 @@ public partial class TextoViewModel : ObservableObject
     [ObservableProperty]
     private ImageSource _myImageSource;
 
-    public TextoViewModel(ITextoRepository textoRepository, IConfiguracoesRepository configuracoesRepository)
+    public TextoViewModel(ITextoService textoService, IConfiguracoesService configuracoesService)
     {
-        _textoRepository = textoRepository;
-        _configuracoesRepository = configuracoesRepository;
-        MyImageSource = "musicplayerstart.png";
-        cts = new CancellationTokenSource();
-        LinhasTexto = LoadTexto();
+        _textoService = textoService;
+        _configuracoesService = configuracoesService;
+        _textoLoadAsync = TextoLoadAsync();
+
     }
 
     [RelayCommand]
@@ -86,7 +84,7 @@ public partial class TextoViewModel : ObservableObject
         {
             for (int i = _index; i < LinhasTexto.Linhas.Count; i++)
             {
-                var config = await _configuracoesRepository.GetConfiguracoesAsync();
+                var config = await _configuracoesService.GetConfiguracoes();
 
                 if (!string.IsNullOrEmpty(LinhasTexto.Linhas[i]))
 
@@ -122,11 +120,17 @@ public partial class TextoViewModel : ObservableObject
 
     private void ChangedIndex(int index)
     {
+        _textoService.UpdateIndex(index);
         IndexViewModel?.Invoke(index);
     }
-
-    private Texto LoadTexto()
+    private async Task TextoReloadAsync()
     {
-        return _textoRepository.GetTexto();
+        LinhasTexto = await _textoService.GetTexto();
+    }
+    private async Task TextoLoadAsync()
+    {
+        MyImageSource = "musicplayerstart.png";
+        cts = new CancellationTokenSource();
+        LinhasTexto = await _textoService.GetTexto();
     }
 }
