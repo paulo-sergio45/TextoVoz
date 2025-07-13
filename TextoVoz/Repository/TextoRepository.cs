@@ -54,6 +54,7 @@ namespace TextoVoz.Repository
             {
                 var serializedData = JsonSerializer.Serialize(texto);
                 await File.WriteAllTextAsync(Path + FileName, serializedData);
+                UpdateIndex(0);
             }
             catch (Exception)
             {

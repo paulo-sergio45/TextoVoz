@@ -9,13 +9,15 @@
         Margin="10"
         HorizontalOptions="Fill"
         RowDefinitions="1*,1*,1*,1*,1*,1*,1*"
-        VerticalOptions="StartAndExpand">
+        VerticalOptions="Start">
+
         <Label
             Grid.Row="0"
             Margin="10"
             HorizontalOptions="Fill"
             Text="Tom da Voz"
-            VerticalOptions="StartAndExpand" />
+            VerticalOptions="Start" />
+
         <Grid
             Grid.Row="1"
             ColumnDefinitions="9*,1*"
@@ -32,12 +34,13 @@
                 Text="{Binding TomVM, StringFormat='{0:F2}'}"
                 VerticalOptions="Center" />
         </Grid>
+
         <Label
             Grid.Row="2"
             Margin="10"
             HorizontalOptions="Fill"
             Text="Volume da Voz"
-            VerticalOptions="StartAndExpand" />
+            VerticalOptions="Start" />
         <Grid
             Grid.Row="3"
             ColumnDefinitions="9*,1*"
@@ -54,12 +57,13 @@
                 Text="{Binding VolumeVM, StringFormat='{0:F0}%'}"
                 VerticalOptions="Center" />
         </Grid>
+
         <Label
             Grid.Row="4"
             Margin="10"
             HorizontalOptions="Fill"
             Text="Selecione a voz"
-            VerticalOptions="StartAndExpand" />
+            VerticalOptions="Start" />
         <Grid
             Grid.Row="5"
             HorizontalOptions="Fill"
@@ -69,6 +73,7 @@
                 ItemsSource="{Binding LocaisVM}"
                 SelectedItem="{Binding LocalVM}" />
         </Grid>
+
         <Grid
             Grid.Row="6"
             Margin="10"

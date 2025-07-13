@@ -33,17 +33,17 @@ namespace TextoVoz
         }
         public static MauiAppBuilder RegisterRepository(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddTransient<IConfiguracoesRepository, ConfiguracoesRepository>();
-            mauiAppBuilder.Services.AddTransient<ITextoRepository, TextoRepository>();
+            mauiAppBuilder.Services.AddScoped<IConfiguracoesRepository, ConfiguracoesRepository>();
+            mauiAppBuilder.Services.AddScoped<ITextoRepository, TextoRepository>();
             // More services registered here.
 
             return mauiAppBuilder;
         }
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
         {
-            mauiAppBuilder.Services.AddTransient<IConfiguracoesService, ConfiguracoesService>();
-            mauiAppBuilder.Services.AddTransient<ITextoService, TextoService>();
-            mauiAppBuilder.Services.AddTransient<ICustomFileTypeService, CustomFileTypeService>();
+            mauiAppBuilder.Services.AddScoped<IConfiguracoesService, ConfiguracoesService>();
+            mauiAppBuilder.Services.AddScoped<ITextoService, TextoService>();
+            mauiAppBuilder.Services.AddSingleton<ICustomFileTypeService, CustomFileTypeService>();
             // More services registered here.
 
             return mauiAppBuilder;
@@ -53,6 +53,7 @@ namespace TextoVoz
         {
             mauiAppBuilder.Services.AddSingleton<ConfiguracoesViewModel>();
             mauiAppBuilder.Services.AddSingleton<TextoViewModel>();
+            mauiAppBuilder.Services.AddSingleton<HomeViewModel>();
             // More view-models registered here.
 
             return mauiAppBuilder;

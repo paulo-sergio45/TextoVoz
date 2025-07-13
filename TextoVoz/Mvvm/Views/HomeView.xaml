@@ -11,7 +11,7 @@
             x:Name="selecioneArquivo"
             Grid.Row="0"
             Grid.Column="1"
-            Clicked="SelecioneArquivo_Clicked"
+           Command="{Binding SelecionarArquivoCommand}" 
             Text="Selecione o arquivo" />
         <Label
             Grid.Row="1"

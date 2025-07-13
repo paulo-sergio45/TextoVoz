@@ -24,7 +24,7 @@
 		<ApplicationTitle>TextoVoz</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.textovoz</ApplicationId>
+		<ApplicationId>com.paulo.textovoz</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -38,57 +38,16 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
-	  <ApplicationId>com.prince45.textovoz</ApplicationId>
-	  <Debugger>Xamarin</Debugger>
-	  <EnableLLVM>False</EnableLLVM>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-	  <ApplicationId>com.prince45.textovoz</ApplicationId>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationId>com.prince45.textovoz</ApplicationId>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationId>com.prince45.textovoz</ApplicationId>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <ApplicationId>com.prince45.textovoz</ApplicationId>
-	  <Debugger>Xamarin</Debugger>
-	  <EnableLLVM>False</EnableLLVM>
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
-	  <ApplicationId>com.prince45.textovoz</ApplicationId>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
-	  <ApplicationId>com.prince45.textovoz</ApplicationId>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationId>com.prince45.textovoz</ApplicationId>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	</PropertyGroup>
-
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" TintColor="#fff"  />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" TintColor="#fff" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -98,43 +57,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\config.svg" />
-	  <None Remove="Resources\Images\gifAndroid.gif" />
-	  <None Remove="Resources\Images\home.svg" />
-	  <None Remove="Resources\Images\reader.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="9.0.2" />
-		<PackageReference Include="CommunityToolkit.Maui.Core" Version="9.0.2" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.70" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.70" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-		<PackageReference Include="SQLitePCLRaw.core" Version="2.1.9" />
-		<PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.9" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Mvvm\Views\HomeView.xaml.cs">
-	    <DependentUpon>HomeView.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Mvvm\Views\TextoView.xaml.cs">
-	    <DependentUpon>TextoView.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Mvvm\Views\ConfiguracoesView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Mvvm\Views\HomeView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Mvvm\Views\TextoView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 	</ItemGroup>
 
 </Project>

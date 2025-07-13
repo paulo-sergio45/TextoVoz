@@ -1,136 +1,136 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Reflection;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using TextoVoz.Interfaces;
 using TextoVoz.Mvvm.Models;
 
 namespace TextoVoz.Mvvm.ViewModels;
 
-[QueryProperty(nameof(TextoReload), "Reload")]
-public partial class TextoViewModel : ObservableObject
+public partial class TextoViewModel(ITextoService textoService, IConfiguracoesService configuracoesService) : ObservableObject
 {
-    public string TextoReload
-    {
-        set => _textoLoadAsync = TextoReloadAsync();
-    }
+    private readonly ITextoService _textoService = textoService;
 
-    public Action<int>? IndexViewModel;
+    private readonly IConfiguracoesService _configuracoesService = configuracoesService;
 
-    private readonly ITextoService _textoService;
+    private CancellationTokenSource cts = new CancellationTokenSource();
 
-    private readonly IConfiguracoesService _configuracoesService;
+    private int _index = 0;
 
-    private CancellationTokenSource cts;
+    private ImageSource _startImageSource = ImageSource.FromFile("musicplayerstart.png");
 
-    public Task _textoLoadAsync { get; private set; }
-
-    private int _index;
+    private ImageSource _stopImageSource = ImageSource.FromFile("musicplayerstop.png");
 
     [ObservableProperty]
     private Texto _linhasTexto;
 
     [ObservableProperty]
-    private ImageSource _myImageSource;
+    private ImageSource _startStopImageSource;
 
-    public TextoViewModel(ITextoService textoService, IConfiguracoesService configuracoesService)
+    [ObservableProperty]
+    private bool _isBusy = false;
+
+    [ObservableProperty]
+    private bool _startStop = false;
+
+    [RelayCommand]
+    private void ButtonClickStartStop(object imageSource)
     {
-        _textoService = textoService;
-        _configuracoesService = configuracoesService;
-        _textoLoadAsync = TextoLoadAsync();
+        StartStop = !StartStop;
+        ChangeMyImageSource();
+        ChangePlayer();
 
     }
 
     [RelayCommand]
-    private async Task ButtonClickStartStopAsync(object imageSource)
+    private void CollectionViewScrolled(ItemsViewScrolledEventArgs args)
     {
-        if (MyImageSource.ToString() == "File: musicplayerstart.png")
-        {
-            MyImageSource = ImageSource.FromFile("musicplayerstop.png");
-            _ = SpeakNowDefaultSettingsAsync();
-        }
-        else
-        {
-            MyImageSource = ImageSource.FromFile("musicplayerstart.png");
-            CancelSpeech();
-        }
-    }
+        int firstIndex = args.FirstVisibleItemIndex;
+        int lastIndex = args.LastVisibleItemIndex;
+        _index = firstIndex;
 
-    [RelayCommand]
-    private void ButtonClickPrevious()
-    {
-        if (_index > 0)
-        {
-            _index--;
-            CancelSpeech();
-            ChangedIndex(_index);
-            _ = SpeakNowDefaultSettingsAsync();
-        }
     }
-
-    [RelayCommand]
-    private void ButtonClickNext()
-    {
-        if (_index < LinhasTexto?.Linhas.Count)
-        {
-            _index++;
-            CancelSpeech();
-            ChangedIndex(_index);
-            _ = SpeakNowDefaultSettingsAsync();
-        }
-    }
-
-    private async Task SpeakNowDefaultSettingsAsync()
+    private async Task TextToSpeechAsync()
     {
         try
         {
-            for (int i = _index; i < LinhasTexto.Linhas.Count; i++)
+            using (cts = new CancellationTokenSource())
             {
-                var config = await _configuracoesService.GetConfiguracoes();
-
-                if (!string.IsNullOrEmpty(LinhasTexto.Linhas[i]))
-
-                    await TextToSpeech.Default.SpeakAsync(LinhasTexto.Linhas[i],
-                        new SpeechOptions()
-                        {
-                            Pitch = (float)config.Tom / 50,
-                            Volume = (float)config.Volume / 100,
-                            Locale = config.Local
-                        },
-                        cancelToken: cts.Token);
-
-                if (!cts.Token.IsCancellationRequested)
+                for (int i = _index; i < LinhasTexto.Linhas.Count; i++)
                 {
-                    _index++;
-                    ChangedIndex(_index);
+                    var config = await _configuracoesService.GetConfiguracoes();
+
+                    if (!string.IsNullOrEmpty(LinhasTexto.Linhas[i]))
+
+                        await TextToSpeech.Default.SpeakAsync(LinhasTexto.Linhas[i],
+                            new SpeechOptions()
+                            {
+                                Pitch = (float)config.Tom / 50,
+                                Volume = (float)config.Volume / 100,
+                                Locale = config.Local
+                            },
+                            cancelToken: cts.Token);
+
+                    if (!cts.Token.IsCancellationRequested)
+                    {
+                        _index++;
+                        ScrollToIndex(_index);
+                        UpdateIndex(_index);
+                    }
                 }
             }
         }
         catch (TaskCanceledException)
         {
-            cts = new CancellationTokenSource();
+
         }
     }
 
     private void CancelSpeech()
     {
-        if (cts?.IsCancellationRequested ?? true)
+        if (cts.IsCancellationRequested)
             return;
 
         cts.Cancel();
     }
 
-    private void ChangedIndex(int index)
+    private void ScrollToIndex(int index)
+    {
+        WeakReferenceMessenger.Default.Send(new ScrollToIndexMessage(index));
+    }
+
+    private void UpdateIndex(int index)
     {
         _textoService.UpdateIndex(index);
-        IndexViewModel?.Invoke(index);
     }
-    private async Task TextoReloadAsync()
+
+    private void ChangeMyImageSource()
     {
-        LinhasTexto = await _textoService.GetTexto();
+        if (StartStop)
+            StartStopImageSource = _stopImageSource;
+        else
+            StartStopImageSource = _startImageSource;
     }
-    private async Task TextoLoadAsync()
+
+    private void ChangePlayer()
     {
-        MyImageSource = "musicplayerstart.png";
-        cts = new CancellationTokenSource();
-        LinhasTexto = await _textoService.GetTexto();
+
+        if (StartStop)
+            _ = TextToSpeechAsync();
+        else
+            CancelSpeech();
     }
+
+    public async Task InitializeAsync()
+    {
+        StartStopImageSource = _startImageSource;
+        LinhasTexto = await _textoService.GetTexto();
+        _index = _textoService.GetIndex();
+        ScrollToIndex(_index);
+
+    }
+
 }

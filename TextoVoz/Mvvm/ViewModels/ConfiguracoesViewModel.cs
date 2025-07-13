@@ -10,8 +10,6 @@ namespace TextoVoz.Mvvm.ViewModels
     {
         private readonly IConfiguracoesService _configuracoesService;
 
-        public Task _configuracoesLoadAsync { get; private set; }
-
         [ObservableProperty]
         private double _tomVM;
 
@@ -28,7 +26,6 @@ namespace TextoVoz.Mvvm.ViewModels
         {
             _configuracoesService = configuracoesService;
 
-            _configuracoesLoadAsync = ConfiguracoesLoadAsync();
         }
 
         [RelayCommand]
@@ -39,10 +36,10 @@ namespace TextoVoz.Mvvm.ViewModels
 
             await ConfiguracoesLoadAsync();
 
-            await Shell.Current.GoToAsync($"//{nameof(TextoView)}?Reload=true");
+            await Shell.Current.GoToAsync($"//{nameof(TextoView)}");
         }
 
-        private async Task ConfiguracoesLoadAsync()
+        public async Task ConfiguracoesLoadAsync()
         {
             Configuracoes config = await _configuracoesService.GetConfiguracoes();
             VolumeVM = config.Volume;
