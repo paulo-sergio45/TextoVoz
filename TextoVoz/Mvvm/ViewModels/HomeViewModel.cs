@@ -30,7 +30,11 @@ namespace TextoVoz.Mvvm.ViewModels
 
             if (result != null)
             {
-                _textoRepository.UpdateTexto(new Texto { Linhas = ReadFile(result) });
+                await _textoRepository.UpdateTexto(new Texto
+                {
+                    NomeArquivo = result.FileName,
+                    Linhas = ReadFile(result)
+                });
                 await Shell.Current.GoToAsync($"//{nameof(TextoView)}");
             }
         }
@@ -41,14 +45,15 @@ namespace TextoVoz.Mvvm.ViewModels
             {
                 var texto = File.ReadAllLines(fileResult.FullPath).ToList();
 
-                if (texto != null)
-                    return texto;
+                if (texto == null)
+                    return new List<string>();
+
+                return texto;
             }
             catch (Exception)
             {
                 throw new Exception("O arquivo está vazio.");
             }
-            return new List<string>();
         }
     }
 

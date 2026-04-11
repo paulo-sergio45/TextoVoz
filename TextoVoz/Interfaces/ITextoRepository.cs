@@ -6,7 +6,7 @@ namespace TextoVoz.Interfaces
     {
         public Task<Texto> GetTexto();
 
-        public void UpdateTexto(Texto texto);
+        public Task UpdateTexto(Texto texto);
 
         public void UpdateIndex(int index);
 

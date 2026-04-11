@@ -59,10 +59,10 @@ public partial class TextoViewModel(ITextoService textoService, IConfiguracoesSe
         {
             using (cts = new CancellationTokenSource())
             {
+                var config = await _configuracoesService.GetConfiguracoes();
+
                 for (int i = _index; i < LinhasTexto.Linhas.Count; i++)
                 {
-                    var config = await _configuracoesService.GetConfiguracoes();
-
                     if (!string.IsNullOrEmpty(LinhasTexto.Linhas[i]))
 
                         await TextToSpeech.Default.SpeakAsync(LinhasTexto.Linhas[i],

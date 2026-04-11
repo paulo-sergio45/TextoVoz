@@ -7,9 +7,9 @@ namespace TextoVoz.Service
     {
         private readonly ITextoRepository _textoRepository = textoRepository;
 
-        public void AtualizaTexto(Texto texto)
+        public async Task AtualizaTexto(Texto texto)
         {
-            _textoRepository.UpdateTexto(texto);
+           await _textoRepository.UpdateTexto(texto);
         }
 
         public int GetIndex()

@@ -27,14 +27,18 @@ namespace TextoVoz.Repository
 
                 var texto = JsonSerializer.Deserialize<Texto>(rawData);
 
-                if (texto != null)
-                    return texto;
+                if (texto == null)
+                    return new Texto();
+
+                var textoIdSalvo = Preferences.Default.Get("NomeArquivo", "");
+                texto.NomeArquivo = textoIdSalvo;
+
+                return texto;
             }
             catch (Exception)
             {
                 throw;
             }
-            return new Texto();
         }
         public int GetIndex()
         {
@@ -48,13 +52,21 @@ namespace TextoVoz.Repository
                 throw;
             }
         }
-        public async void UpdateTexto(Texto texto)
+        public async Task UpdateTexto(Texto texto)
         {
             try
             {
+                var textoIdSalvo = Preferences.Default.Get("NomeArquivo", "");
+
+                if (textoIdSalvo != texto.NomeArquivo)
+                {
+                    UpdateIndex(0);
+                }
+
                 var serializedData = JsonSerializer.Serialize(texto);
                 await File.WriteAllTextAsync(Path + FileName, serializedData);
-                UpdateIndex(0);
+                Preferences.Default.Set("NomeArquivo", texto.NomeArquivo);
+
             }
             catch (Exception)
             {
